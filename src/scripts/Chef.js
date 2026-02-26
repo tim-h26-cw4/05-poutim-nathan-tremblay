@@ -15,14 +15,21 @@ export default class Chef {
       const instance = new Poutine(poutine);
       this.menu.push(instance);
     }
-    const boutonCommander = document.querySelectorAll('.button-secondary');
-    for (let i = 0; i < boutonCommander.length; i++) {
-      const bouton = boutonCommander[i];
-      bouton.addEventListener('click', this.sendOrder);
-    }
+    const boutonCommander = this.element.querySelector('.button-secondary');
+    boutonCommander.addEventListener('click', this.sendOrder.bind(this));
   }
 
   sendOrder() {
-    console.log('allo');
+    let nbPoutine = 0;
+    for (let i = 0; i < this.menu.length; i++) {
+      const menu = this.menu[i];
+      if (menu.selectedType != '') {
+        nbPoutine += 1;
+      }
+    }
+    const text = document.createElement('p');
+    text.innerText = `Nombre total de poutine(s) : ${nbPoutine}`;
+    this.container.innerHTML = '';
+    this.container.appendChild(text);
   }
 }
